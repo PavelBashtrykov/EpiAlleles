@@ -28,7 +28,7 @@ def heatmap(data, color, xrange):
         annot=False,
         xticklabels=np.arange(1,xrange+1,1),
         yticklabels=False,
-        cbar=True,
+        cbar=False,
         fmt="d",
         cmap=color,
         linewidths=0,
