@@ -1,6 +1,7 @@
 import random
 import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def get_random_reads_for_heatmap(reads2plot, total_reads_num, patterns):
@@ -19,15 +20,15 @@ def get_random_reads_for_heatmap(reads2plot, total_reads_num, patterns):
     return sorted_reads
 
 
-def heatmap(data, color):
+def heatmap(data, color, xrange):
     plt.close("all")
     fig, ax = plt.subplots(figsize=(9, 6))
     sns.heatmap(
         data,
         annot=False,
-        xticklabels=3,
+        xticklabels=np.arange(1,xrange+1,1),
         yticklabels=False,
-        cbar=False,
+        cbar=True,
         fmt="d",
         cmap=color,
         linewidths=0,
@@ -38,4 +39,5 @@ def heatmap(data, color):
 
 def generate_heatmap(reads2plot, total_reads_num, patterns, color="copper"):
     data = get_random_reads_for_heatmap(reads2plot, total_reads_num, patterns)
-    return heatmap(data=data, color=color)
+    xaxisRange = len(patterns[0])
+    return heatmap(data=data, color=color, xrange=xaxisRange)
