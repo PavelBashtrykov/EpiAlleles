@@ -1,2 +1,2 @@
 # EpiAlleles  
-Contains scripts to analyse methlyation of individual sequenced reads.
+Contains scripts to analyse methylation of individual sequenced reads.
