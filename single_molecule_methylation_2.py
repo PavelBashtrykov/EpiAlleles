@@ -8,7 +8,7 @@ from utils.heatmap import generate_heatmap
 from utils.histogram import generate_histogram, generate_histogram_2sets
 from utils.sam import get_meth_sam
 
-# Plot 2 data sets on one
+# Plot 2 data sets on one plot
 
 
 def main():
