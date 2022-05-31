@@ -1,10 +1,13 @@
+from matplotlib import pyplot as plt
 import seaborn as sns
 
 
 def generate_histogram(data, color="b"):
+    fig, ax = plt.subplots()
     sns.set_theme(style="ticks")
     sns.color_palette("Paired")
-    sns.histplot(data=data, stat="probability", bins=10, color=color)
+    sns.histplot(data=data, stat="probability", bins=10, color=color, ax=ax)
+    ax.set_xlim(0,1)
     # sns.despine()
 
 
@@ -31,6 +34,7 @@ def generate_histogram_2sets_1st(data, colors=["b", "g"]):
 def generate_histogram_2sets(data):
     # sns.set_theme(style="ticks")
     # sns.color_palette("Paired")
+    fig, ax = plt.subplots()
     sns.color_palette()
     sns.histplot(
         data=data,
@@ -41,5 +45,7 @@ def generate_histogram_2sets(data):
         common_norm=False,
         # multiple="stack",
         # kde=True,
+        ax=ax,
     )
+    ax.set_xlim(0,1)
 

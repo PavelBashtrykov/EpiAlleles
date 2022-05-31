@@ -61,8 +61,7 @@ def get_meth_sam(coordinates, samfile):
     df = pd.DataFrame()
     with open(samfile, "r") as fh:
         for i in fh:
-            meth_pattern = analyse_meth_pattern(coordinates, sequence=i.strip())
-
+            meth_pattern = analyse_meth_pattern(coordinates, sequence=i.strip().split("\t")[9])
             meth_level = calculate_meth_level(meth_pattern)
             if not meth_level:
                 continue

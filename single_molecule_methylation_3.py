@@ -66,7 +66,7 @@ def main():
         return
 
     # reads to plot on a heatmap
-    reads2plot = 10000
+    reads2plot = 100
     if args.reads2plot:
         reads2plot = args.reads2plot
     print(f"reads2plot: {reads2plot}")
