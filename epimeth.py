@@ -4,9 +4,11 @@ import os
 import matplotlib.pyplot as plt
 
 from utils.fasta import get_coordinates
-from utils.heatmap import generate_heatmap
-from utils.histogram import generate_histogram
+from utils.heatmap import SimpleHeatmapMaker, make_heatmap
+from utils.histogram import MultipleDataHistogramMaker, SingleDataHistogramMaker, make_histogram
+from utils.meth_data import MethylationData, OneSampleMethylationData
 from utils.sam import get_meth_sam
+from utils.save import WriteMethlation2CSV, save_data
 
 
 def main():
@@ -68,17 +70,12 @@ def main():
 
     # analysis
     coordinates = get_coordinates(fastafile)
+    meth_data = MethylationData()
     for s in samfiles:
-        print(f"sam file: {s}")
-        tag = s.strip(".sam")
-        num, pat, meth = get_meth_sam(coordinates=coordinates, samfile=s)
-        generate_heatmap(reads2plot=reads2plot, total_reads_num=num, patterns=pat)
-        plt.savefig(tag + "_heatmap.png")
-        plt.close("all")
-        ax = generate_histogram(data=meth)
-        plt.savefig(tag + "_histogram.png")
-        with open(tag + ".csv", "w+") as fh:
-            fh.write("\n".join([str(i) for i in meth]))
+        meth_data.add(get_meth_sam(coordinates=coordinates, samfile=s))
+    make_histogram(meth_data, SingleDataHistogramMaker())
+    make_heatmap(meth_data, SimpleHeatmapMaker(), reads2plot)
+    save_data(meth_data, WriteMethlation2CSV())
 
 
 if __name__ == "__main__":
