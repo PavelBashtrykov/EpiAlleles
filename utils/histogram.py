@@ -29,7 +29,7 @@ class MultipleDataHistogramMaker:
             formated_data = _format_data_2_df(methdata=data)
             main_df = pd.concat([main_df, formated_data], axis=0, ignore_index=True)
         _generate_histogram_multiple_data(data=main_df)
-        plt.savefig("overlay_heatmap.png")
+        plt.savefig("overlay_histogram.png")
 
 def make_histogram(methdata: MethylationData, hist_maker: HistogramMaker) -> None:
     """Make a histogram"""
@@ -65,7 +65,7 @@ def _generate_histogram_multiple_data(data: pd.DataFrame):
         bins=10,
         stat="probability",
         common_norm=False,
-        kde=True,
+        kde=False,
         ax=ax,
     )
     ax.set_xlim(0,1)
@@ -92,13 +92,6 @@ def _generate_histogram_multiple_data(data: pd.DataFrame):
 #     )
 #     ax.lines[0].set_color("crimson")
 #     # sns.despine()
-
-
-# def generate_histogram_2sets_1st(data, colors=["b", "g"]):
-#     sns.set_theme(style="ticks")
-#     sns.color_palette("Paired")
-#     sns.histplot(data=data[0], stat="probability", bins=10, color=colors[0])
-#     sns.histplot(data=data[1], stat="probability", bins=10, color=colors[1])
 
 
 # def generate_histogram_2sets(data):

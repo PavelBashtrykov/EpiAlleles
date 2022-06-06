@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
 
-
 @dataclass(frozen=True)
 class OneSampleMethylationData:
     file_name: str

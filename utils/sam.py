@@ -1,17 +1,24 @@
 import pandas as pd
 
-from utils.meth_data import MethFlags, OneSampleMethylationData
+from utils.meth_data import MethFlags, MethylationData, OneSampleMethylationData
+
+def extract_meth(coordinates: list, samfiles: list, storage: MethylationData):
+    """Extracts methylation patterns and methylation levels of individual reads from a list of sam files."""
+    for s in samfiles:
+        meth = _get_meth_sam(coordinates=coordinates, samfile=s)
+        storage.add(meth)
 
 
-def get_meth_sam(coordinates: list, samfile: str) -> OneSampleMethylationData:
+def _get_meth_sam(coordinates: list, samfile: str) -> OneSampleMethylationData:
     """Extracts methylation patterns and methylation levels of individual reads in a sam file.
 
     Returns
     -------
-    MethylationData class with the following variables:
-        total_read_number: int
-        all_meth_patterns: list
-        all_meth_levels: list
+    OneSampleMethylationData class with the following variables:
+        file_name: str,
+        reads_number: int,
+        meth_patterns: list,
+        meth_levels: list
     """
     total_read_number = 0
     all_meth_patterns = []

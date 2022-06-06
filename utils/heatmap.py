@@ -34,7 +34,7 @@ def _get_random_reads_for_heatmap(methdata: OneSampleMethylationData, reads2plot
     else:
         # generate a list of random indices for visualisation
         randomlist = []
-        randomlist = random.sample(range(0, methdata.reads_number+1), reads2plot)
+        randomlist = random.sample(range(0, methdata.reads_number), reads2plot)
         
         # select the reads based on the list of random indices
         selected_reads = []
@@ -44,12 +44,13 @@ def _get_random_reads_for_heatmap(methdata: OneSampleMethylationData, reads2plot
 
 def _generate_heatmap(data: list, xrange: int, color="copper"):
     plt.close("all")
+    reads_number = len(data)
     fig, ax = plt.subplots(figsize=(9, 6))
     sns.heatmap(
         data,
         annot=False,
-        xticklabels=np.arange(1,xrange+1,1),
-        yticklabels=False,
+        xticklabels=np.arange(1,xrange+1,1),  # type: ignore
+        yticklabels=False,  # type: ignore
         cbar=False,
         fmt="d",
         cmap=color,
@@ -57,7 +58,9 @@ def _generate_heatmap(data: list, xrange: int, color="copper"):
         ax=ax,
     )
     ax.set_xlabel("CpG site")
-    ax.set_ylabel("Reads")
+    ax.set_ylabel(f"Reads ({reads_number})")
+    ax.set_title("Methylation of individual amplicons")
+    plt.tight_layout()
     return ax
 
 
