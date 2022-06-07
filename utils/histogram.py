@@ -49,6 +49,7 @@ def _generate_histogram(data: pd.DataFrame):
     palette = sns.color_palette("Paired") # ("Blues", 9)
     ax = sns.histplot(data, x='meth_level',
         stat="probability",
+        common_norm=False,
         bins=10,
         binrange=(0,1.),
         color=palette[2],
@@ -68,19 +69,31 @@ def _generate_histogram(data: pd.DataFrame):
         fontweight="normal", #'normal' | 'bold' | 'heavy' | 'light' | 'ultrabold' | 'ultralight'
         )
     sns.despine()
-    return ax
+    return
 
 def _generate_histogram_multiple_data(data: pd.DataFrame):
-    fig, ax = plt.subplots()
-    sns.histplot(
-        data=data,
-        x="meth_level",
+    plt.close("all")
+    palette = sns.color_palette("Paired") # ("Blues", 9)
+    ax = sns.histplot(data,
+        x='meth_level',
         hue="sample",
-        bins=10,
         stat="probability",
-        common_norm=False,
+        bins=10,
+        binrange=(0,1.),
+        color=palette[2],
+        edgecolor="white", # palette[3],
+        linewidth=1,
         kde=False,
-        ax=ax,
+        cbar=True,
+        # cbar_kws=dict(shrink=.75),
     )
-    ax.set_xlim(0,1)
-    return ax
+    ax.set_xlim(-0.05,1)
+    ax.set_xlabel("Methylation level")
+    ax.set_ylabel("Reads fraction")
+    ax.set_title("Distribution of methylation levels within samples", 
+        fontsize=14,
+        color="black", # palette[3]
+        fontweight="normal", #'normal' | 'bold' | 'heavy' | 'light' | 'ultrabold' | 'ultralight'
+        )
+    sns.despine()
+    return

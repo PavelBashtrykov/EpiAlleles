@@ -19,7 +19,7 @@ class SimpleHeatmapMaker:
         for data in methdata.data:
             sorted_reads = _get_random_reads_for_heatmap(data, reads2plot)
             xaxisRange = len(data.meth_patterns[0])
-            ax = _generate_heatmap(data=sorted_reads, xrange=xaxisRange)
+            _generate_heatmap(sorted_reads, xaxisRange)
             plt.savefig(data.file_name.strip(".sam") + "_heatmap.png")
 
 
@@ -44,7 +44,7 @@ def _get_random_reads_for_heatmap(methdata: OneSampleMethylationData, reads2plot
 def _generate_heatmap(data: list, xrange: int, color="copper"):
     plt.close("all")
     reads_number = len(data)
-    fig, ax = plt.subplots(figsize=(9, 6))
+    fig, ax = plt.subplots(figsize=(6, 4))
     sns.heatmap(
         data,
         annot=False,
@@ -58,6 +58,10 @@ def _generate_heatmap(data: list, xrange: int, color="copper"):
     )
     ax.set_xlabel("CpG site")
     ax.set_ylabel(f"Reads ({reads_number})")
-    ax.set_title("Methylation of individual amplicons")
+    ax.set_title("Methylation of individual reads",
+        fontsize=14,
+        color="black", # palette[3]
+        fontweight="normal", #'normal' | 'bold' | 'heavy' | 'light' | 'ultrabold' | 'ultralight'    
+    )
     plt.tight_layout()
-    return ax
+    return

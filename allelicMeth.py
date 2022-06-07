@@ -86,7 +86,7 @@ def main():
     ####################################################################################
     coordinates = get_coordinates(fastafile[0])
     meth_data = MethylationData()
-    extract_meth(coordinates=coordinates, samfiles=samfiles, storage=meth_data)
+    extract_meth(coordinates, samfiles, meth_data)
     make_histogram(meth_data, histmode)
     make_heatmap(meth_data, SimpleHeatmapMaker(), reads2plot)
     save_data(meth_data, WriteMethlation2CSV())
