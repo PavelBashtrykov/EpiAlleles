@@ -12,6 +12,7 @@ class HistogramMaker(Protocol):
     def plot(self, methdata: MethylationData) -> None:
         ...
 
+
 class SingleDataHistogramMaker:
     """Makes individual histograms from data stored in MethylationData class instance.
     """
@@ -30,6 +31,7 @@ class MultipleDataHistogramMaker:
             main_df = pd.concat([main_df, formated_data], axis=0, ignore_index=True)
         _generate_histogram_multiple_data(main_df)
         plt.savefig("overlay_histogram.png")
+
 
 def make_histogram(methdata: MethylationData, hist_maker: HistogramMaker) -> None:
     """Make a histogram"""

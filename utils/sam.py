@@ -42,10 +42,8 @@ def _get_meth_sam(coordinates: list, samfile: str) -> OneSampleMethylationData:
         meth_levels=all_meth_levels,
     )
 
-
 def _parse_sam_line(line: str) -> str:
     return line.strip().split("\t")[9]
-
 
 def _get_meth_pattern(coordinates: list, sequence: str) -> list:
     """Analyse methylation pattern of a bisulfite read."""
@@ -60,58 +58,9 @@ def _get_meth_pattern(coordinates: list, sequence: str) -> list:
             meth_pattern.append(MethFlags.missing_motif_flag)
     return meth_pattern
 
-
 def _calculate_meth_level(meth_pattern: list):
     """Calculates methylation level of a bisulfite read."""
     if MethFlags.missing_motif_flag in meth_pattern:
         return None
     else:
         return meth_pattern.count(MethFlags.methylated_motif_flag) / len(meth_pattern)
-
-
-# def get_meth_sam2(coordinates: list, samfile: str):
-#     """Extract methylation patterns and methylation levels of individual reads in a sam file."""
-#     total_read_number = 0
-#     all_meth_patterns = []
-#     all_meth_levels = []
-#     with open(samfile, "r") as fh:
-#         for i in fh:
-#             meth_pattern = _get_meth_pattern(coordinates, sequence=i.strip())
-#             meth_level = _calculate_meth_level(meth_pattern)
-#             if not meth_level:
-#                 continue
-#             all_meth_patterns.append(meth_pattern)
-#             all_meth_levels.append(meth_level)
-#             total_read_number += 1
-
-#     return total_read_number, all_meth_patterns, all_meth_levels
-
-
-# def get_meth_sam3(coordinates: list, samfile: str):
-#     """Extracts methylation patterns and methylation levels of individual reads in a sam file.
-
-#     Returns
-#     -------
-#     total_read_number: int
-#     all_meth_patterns: list
-#     all_meth_levels: list
-#     """
-#     total_read_number = 0
-#     all_meth_patterns = []
-#     all_meth_levels = []
-#     df = pd.DataFrame()
-#     with open(samfile, "r") as fh:
-#         for i in fh:
-#             meth_pattern = _get_meth_pattern(
-#                 coordinates, sequence=i.strip().split("\t")[9]
-#             )
-#             meth_level = _calculate_meth_level(meth_pattern)
-#             if not meth_level:
-#                 continue
-#             all_meth_patterns.append(meth_pattern)
-#             all_meth_levels.append(meth_level)
-#             total_read_number += 1
-#     df["meth_pattern"] = all_meth_patterns
-#     df["meth_level"] = all_meth_levels
-#     df["sample"] = samfile.strip(".sam")
-#     return total_read_number, all_meth_patterns, all_meth_levels, df
