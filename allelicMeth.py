@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from utils.fasta import get_coordinates
 from utils.heatmap import SimpleHeatmapMaker, make_heatmap
 from utils.histogram import MultipleDataHistogramMaker, SingleDataHistogramMaker, make_histogram
-from utils.meth_data import MethylationData, OneSampleMethylationData
+from utils.meth_data import MethylationData
 from utils.sam import extract_meth
 from utils.save import WriteMethlation2CSV, save_data
 
