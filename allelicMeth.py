@@ -2,8 +2,6 @@
 import argparse
 import os
 
-import matplotlib.pyplot as plt
-
 from utils.fasta import get_coordinates
 from utils.heatmap import SimpleHeatmapMaker, make_heatmap
 from utils.histogram import MultipleDataHistogramMaker, SingleDataHistogramMaker, make_histogram
@@ -38,7 +36,7 @@ def main():
     parser.add_argument("--reads2plot", help="Number of reads to visualize on a heatmap (default: 10000)", type=int, required=False)
     args = parser.parse_args()
 
-    workdir = os.path.dirname(os.path.realpath(__file__))
+    workdir = os.getcwd()
     filenames = os.listdir(workdir)
 
     # get fasta file
