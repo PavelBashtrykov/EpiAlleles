@@ -5,13 +5,13 @@
 `allelicMeth [options]`  
 
 ## Options  
-* `--fasta <fasta_file>`
+* `--fasta <fasta_file>`  
 Fasta file used for generation of SAM files. Will be used to extract postitions of CpG sites. If not provided, `allelicMeth` will read the `CWD` to find `.fa` or `.fasta` file.  
 
-* `--sam <sam_file(s)>`
+* `--sam <sam_file(s)>`  
 Sam file(s) containing bisulfite sequencing reads. If non is provided `allelicMeth` will read `CWD` and analyse all `.sam` files in `CWD`. 
 
-* `--mode <str: single | multiple>`
+* `--mode <str: single | multiple>`  
 There are two modes `single` (default) and `multiple`. In a `single` mode one histogram will be produced for every `.sam` file. In `multiple` mode several data sets will be plotted on one histogram (generated from all `.sam` files passed to the script).  
 
 * `--reads2plot <INT>`  
