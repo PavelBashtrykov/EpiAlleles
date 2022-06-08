@@ -44,7 +44,7 @@ def _get_random_reads_for_heatmap(methdata: OneSampleMethylationData, reads2plot
 def _generate_heatmap(data: list, xrange: int, color="copper"):
     plt.close("all")
     reads_number = len(data)
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(6,4))
     sns.heatmap(
         data,
         annot=False,
