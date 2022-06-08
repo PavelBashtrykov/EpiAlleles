@@ -18,4 +18,5 @@ There are two modes `single` (default) and `multiple`. In a `single` mode one hi
 Number of reads to be plotted on heatmaps. If the passed number is greater than the total read number in an input file(s), then the last one will be used.  
 
 ## Examplary output  
-<img title="single mode histogram" src="images/overlay_histogram.png" width="300"/> <img title="multiple mode histogram" src="images/single_data_histogram.png" width="300"/> <img title="heatmap" src="images/heatmap.png" width="300"/> 
+<img title="single mode histogram" src="images/overlay_histogram.png" width="300"/> <img title="multiple mode histogram" src="images/single_data_histogram.png" width="300"/>  
+<img title="heatmap" src="images/heatmap.png" width="300"/> 

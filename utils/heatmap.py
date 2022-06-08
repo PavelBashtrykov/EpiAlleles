@@ -63,5 +63,5 @@ def _generate_heatmap(data: list, xrange: int, color="copper"):
         color="black", # palette[3]
         fontweight="normal", #'normal' | 'bold' | 'heavy' | 'light' | 'ultrabold' | 'ultralight'    
     )
-    plt.tight_layout()
+    # plt.tight_layout()
     return
