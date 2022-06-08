@@ -4,11 +4,13 @@
 ## Typical usage      
 `allelicMeth [options]`  
 
+Can be executed without arguments from a working directory containing `fasta` and `sam` file(s).
+
 ## Options  
-* `--fasta <fasta_file>`  
+* `--fasta <str: fasta_file>`  
 Fasta file used for generation of SAM files. Will be used to extract postitions of CpG sites. If not provided, `allelicMeth` will read the `CWD` to find `.fa` or `.fasta` file.  
 
-* `--sam <sam_file(s)>`  
+* `--sam <str: sam_file(s)>`  
 Sam file(s) containing bisulfite sequencing reads. If non is provided `allelicMeth` will read `CWD` and analyse all `.sam` files in `CWD`. 
 
 * `--mode <str: single | multiple>`  

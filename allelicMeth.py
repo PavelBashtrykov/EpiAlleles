@@ -1,4 +1,9 @@
 #!/usr/bin/env python3.10
+
+################################################################################
+# This script is written by Pavel Bashtrykov
+# pavel.bashtrykov@gmail.com
+################################################################################
 import argparse
 import os
 
@@ -15,13 +20,12 @@ from utils.save import WriteMethlation2CSV, save_data
 
 
 def main():
-    """Computes methylation of individual reads and generates a heatmap.
+    """Computes methylation of individual reads.
     
     Inputs
     ------
-    Save the script in a working directory containing one fasta file and 1 or more sam files.
-    Fasta file is a source of CpG sites coordinates.
-    Methylated reads are passed as sam files.
+    Fasta file: a reference sequence, is a source of CpG site coordinates.
+    Sam file(s):  sorce of methylated reads mapped to the reference sequence.
     
     Returns
     -------
@@ -43,7 +47,8 @@ def main():
     parser.add_argument(
         "--sam",
         help="A list of samfiles for the analysis. If not provided CWD will be read.",
-        type=str,
+        nargs="+",
+        # type=str,
         required=False,
     )
     parser.add_argument(
@@ -82,7 +87,7 @@ def main():
     # get sam files
     samfiles = []
     if args.sam:
-        samfiles.append(args.sam)
+        samfiles += args.sam
     else:
         samfiles = [f for f in filenames if f.endswith(".sam")]
     print(f"SAM files: {samfiles}")
