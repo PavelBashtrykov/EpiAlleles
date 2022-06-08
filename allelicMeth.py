@@ -4,7 +4,11 @@ import os
 
 from utils.fasta import get_coordinates
 from utils.heatmap import SimpleHeatmapMaker, make_heatmap
-from utils.histogram import MultipleDataHistogramMaker, SingleDataHistogramMaker, make_histogram
+from utils.histogram import (
+    MultipleDataHistogramMaker,
+    SingleDataHistogramMaker,
+    make_histogram,
+)
 from utils.meth_data import MethylationData
 from utils.sam import extract_meth
 from utils.save import WriteMethlation2CSV, save_data
@@ -30,10 +34,30 @@ def main():
     # Settings
     ####################################################################################
     parser = argparse.ArgumentParser()
-    parser.add_argument("--fasta", help="Fasta file used to generate sam files, will be used to get positions of CpG sites.", type=str, required=False)
-    parser.add_argument("--sam", help="A list of samfiles for the analysis. If not provided CWD will be read.", type=str, required=False)
-    parser.add_argument("--mode", help="Options: single or multiple. Defines how many data sets to plot on a histogram (default: single).", type=str, required=False)
-    parser.add_argument("--reads2plot", help="Number of reads to visualize on a heatmap (default: 10000)", type=int, required=False)
+    parser.add_argument(
+        "--fasta",
+        help="Fasta file used to generate sam files, will be used to get positions of CpG sites.",
+        type=str,
+        required=False,
+    )
+    parser.add_argument(
+        "--sam",
+        help="A list of samfiles for the analysis. If not provided CWD will be read.",
+        type=str,
+        required=False,
+    )
+    parser.add_argument(
+        "--mode",
+        help="Options: single or multiple. Defines how many data sets to plot on a histogram (default: single).",
+        type=str,
+        required=False,
+    )
+    parser.add_argument(
+        "--reads2plot",
+        help="Number of reads to visualize on a heatmap (default: 10000)",
+        type=int,
+        required=False,
+    )
     args = parser.parse_args()
 
     workdir = os.getcwd()
@@ -46,13 +70,14 @@ def main():
     else:
         fastafile = [f for f in filenames if f.endswith(".fa") or f.endswith(".fasta")]
     if not fastafile:
-        print("There is no fasta file in the working directory and none was passed in command line, provide one.")
+        print(
+            "There is no fasta file in the working directory and none was passed in command line, provide one."
+        )
         return
-    elif len(fastafile)>1:
+    elif len(fastafile) > 1:
         print(f"There is more than one fasta file in the working dir, leave only one.")
         return
     print(f"Fasta file: {fastafile}")
-
 
     # get sam files
     samfiles = []
@@ -70,7 +95,7 @@ def main():
     elif args.mode == "single":
         histmode = SingleDataHistogramMaker()
     else:
-        print(f"--mode can take only one of two parameters \"single\" or \"multiple\"")
+        print(f'--mode can take only one of two parameters "single" or "multiple"')
         return
 
     # reads to plot on a heatmap
