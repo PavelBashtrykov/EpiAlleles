@@ -20,7 +20,7 @@ class SimpleHeatmapMaker:
             sorted_reads = _get_random_reads_for_heatmap(data, reads2plot)
             xaxisRange = len(data.meth_patterns[0])
             _generate_heatmap(sorted_reads, xaxisRange)
-            plt.savefig(data.file_name.strip(".sam") + "_heatmap.png")
+            plt.savefig(data.file_name.strip(".sam") + "_heatmap.png",dpi=200)
 
 
 def make_heatmap(methdata: MethylationData, heatmap_maker: HeatmapMaker, reads2plot: int) -> None:

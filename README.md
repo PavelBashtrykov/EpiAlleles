@@ -19,4 +19,4 @@ Number of reads to be plotted on heatmaps. If the passed number is greater than 
 
 ## Examplary output  
 <img title="single mode histogram" src="images/overlay_histogram.png" width="300"/> <img title="multiple mode histogram" src="images/single_data_histogram.png" width="300"/>  
-<img title="heatmap" src="images/heatmap.png" width="300"/> 
+<p align="center"><img title="heatmap" style="middle" src="images/heatmap.png" width="300"></p> 
