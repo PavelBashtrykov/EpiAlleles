@@ -44,32 +44,6 @@ def _format_data_2_df(methdata: OneSampleMethylationData) -> pd.DataFrame:
     df["sample"] = methdata.file_name.strip(".sam")
     return df
 
-# def _generate_histogram(data: pd.DataFrame):
-#     plt.close("all")
-#     palette = sns.color_palette("Paired") # ("Blues", 9)
-#     ax = sns.histplot(data, x='meth_level',
-#         stat="probability",
-#         common_norm=False,
-#         bins=10,
-#         binrange=(0,1.),
-#         color=palette[2],
-#         edgecolor="white", # palette[3],
-#         linewidth=1,
-#         kde=False,
-#         cbar=True,
-#         # cbar_kws=dict(shrink=.75)
-#         )
-#     # ax.lines[0].set_color('crimson') # for kde=True
-#     ax.set_xlim(-0.05,1)
-#     ax.set_xlabel("Methylation level")
-#     ax.set_ylabel("Reads fraction")
-#     ax.set_title("Distribution of methylation levels within the sample", 
-#         fontsize=14,
-#         color="black", # palette[3]
-#         fontweight="normal", #'normal' | 'bold' | 'heavy' | 'light' | 'ultrabold' | 'ultralight'
-#         )
-#     sns.despine()
-
 def _generate_histogram(data: pd.DataFrame):
     plt.close("all")
     f, ax = plt.subplots(figsize=(6,4))
@@ -90,34 +64,6 @@ def _generate_histogram(data: pd.DataFrame):
     ax.set_title("Distribution of methylation levels within the sample")
     sns.despine()
 
-
-# def _generate_histogram_multiple_data0(data: pd.DataFrame):
-#     plt.close("all")
-#     palette = sns.color_palette("Paired") # ("Blues", 9)
-#     ax = sns.histplot(data,
-#         x='meth_level',
-#         hue="sample",
-#         stat="probability",
-#         common_norm=False,
-#         bins=10,
-#         binrange=(0,1.),
-#         color=palette[2],
-#         edgecolor="white", # palette[3],
-#         linewidth=1,
-#         kde=False,
-#         cbar=True,
-#         # cbar_kws=dict(shrink=.75),
-#     )
-#     ax.set_xlim(-0.05,1)
-#     ax.set_xlabel("Methylation level")
-#     ax.set_ylabel("Reads fraction")
-#     ax.set_title("Distribution of methylation levels within samples", 
-#         fontsize=14,
-#         color="black", # palette[3]
-#         fontweight="normal", #'normal' | 'bold' | 'heavy' | 'light' | 'ultrabold' | 'ultralight'
-#         )
-#     sns.despine()
-#     return
 
 def _generate_histogram_multiple_data(data: pd.DataFrame):
     plt.close("all")
