@@ -3,6 +3,7 @@
 ################################################################################
 # This script is written by Pavel Bashtrykov
 # pavel.bashtrykov@gmail.com
+# pavel.bashtrykov@ibtb.uni-stuttgart.de
 ################################################################################
 import argparse
 import os

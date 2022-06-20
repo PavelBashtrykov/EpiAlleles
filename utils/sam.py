@@ -1,5 +1,3 @@
-import pandas as pd
-
 from utils.meth_data import MethFlags, MethylationData, OneSampleMethylationData
 
 def extract_meth(coordinates: list, samfiles: list, storage: MethylationData):
