@@ -52,12 +52,12 @@ def _generate_histogram(data: pd.DataFrame):
         x='meth_level',
         stat="probability",
         common_norm=False,
-        bins=20,
+        bins=10,
         binrange=(0,1.),
         color="0.8",
-        kde=True,
+        kde=False,
         )
-    ax.lines[0].set_color('crimson') # for kde=True
+    #ax.lines[0].set_color('crimson') # for kde=True
     ax.set_xlim(-0.05,1.05)
     ax.set_xlabel("Methylation level")
     ax.set_ylabel("Reads fraction")
@@ -74,7 +74,7 @@ def _generate_histogram_multiple_data(data: pd.DataFrame):
         hue="sample",
         stat="probability",
         common_norm=False,
-        bins=20,
+        bins=10,
         binrange=(0,1.),
         kde=False,
     )
