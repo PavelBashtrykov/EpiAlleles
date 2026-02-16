@@ -293,17 +293,22 @@ class AllelicMethOrchestrator:
         for idx, (fasta_file, sam_files) in enumerate(file_pairs, 1):
             self.logger.info(f"[{idx}/{len(file_pairs)}] Processing: {fasta_file.name} + {[f.name for f in sam_files]}")
 
-            success, stdout, stderr = self._run_allelicmeth(
-                fasta_file, sam_files, mode, reads2plot
-            )
+            try:
+                success, stdout, stderr = self._run_allelicmeth(
+                    fasta_file, sam_files, mode, reads2plot
+                )
 
-            if success:
-                self.logger.info(f"[{idx}/{len(file_pairs)}] SUCCESS")
-                success_count += 1
-            else:
-                self.logger.error(f"[{idx}/{len(file_pairs)}] FAILED")
-                if stderr:
-                    self.logger.error(f"Error details: {stderr}")
+                if success:
+                    self.logger.info(f"[{idx}/{len(file_pairs)}] SUCCESS")
+                    success_count += 1
+                else:
+                    self.logger.error(f"[{idx}/{len(file_pairs)}] FAILED")
+                    if stderr:
+                        self.logger.error(f"Error details: {stderr}")
+                    failure_count += 1
+                    failed_pairs.append((fasta_file.name, [f.name for f in sam_files]))
+            except Exception as e:
+                self.logger.error(f"[{idx}/{len(file_pairs)}] FAILED with exception: {e}", exc_info=True)
                 failure_count += 1
                 failed_pairs.append((fasta_file.name, [f.name for f in sam_files]))
 
