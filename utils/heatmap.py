@@ -17,6 +17,8 @@ class SimpleHeatmapMaker:
     """
     def plot(self, methdata: MethylationData, reads2plot: int) -> None:
         for data in methdata.data:
+            if not data.meth_patterns:
+                continue
             sorted_reads = _get_random_reads_for_heatmap(data, reads2plot)
             xaxisRange = len(data.meth_patterns[0])
             _generate_heatmap(sorted_reads, xaxisRange)

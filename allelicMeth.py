@@ -72,7 +72,7 @@ def main():
     # get fasta file
     fastafile = None
     if args.fasta:
-        fastafile = args.fasta
+        fastafile = [args.fasta]
     else:
         fastafile = [f for f in filenames if f.endswith(".fa") or f.endswith(".fasta")]
     if not fastafile:
