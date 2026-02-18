@@ -1,14 +1,26 @@
 from utils.meth_data import MethFlags, MethylationData, OneSampleMethylationData
 
-def extract_meth(coordinates: list, samfiles: list, storage: MethylationData):
-    """Extracts methylation patterns and methylation levels of individual reads from a list of sam files."""
+def extract_meth(coordinates: list, samfiles: list, storage: MethylationData, retain_methylated: bool = False):
+    """Extracts methylation patterns and methylation levels of individual reads from a list of sam files.
+
+    Args:
+        coordinates: List of CpG site coordinates from reference sequence
+        samfiles: List of SAM file paths to process
+        storage: MethylationData object to store results
+        retain_methylated: If True, only keep reads with at least one methylated CpG site
+    """
     for s in samfiles:
-        meth = _get_meth_sam(coordinates, s)
+        meth = _get_meth_sam(coordinates, s, retain_methylated=retain_methylated)
         storage.add(meth)
 
 
-def _get_meth_sam(coordinates: list, samfile: str) -> OneSampleMethylationData:
+def _get_meth_sam(coordinates: list, samfile: str, retain_methylated: bool = False) -> OneSampleMethylationData:
     """Extracts methylation patterns and methylation levels of individual reads in a sam file.
+
+    Args:
+        coordinates: List of CpG site coordinates from reference sequence
+        samfile: Path to SAM file to process
+        retain_methylated: If True, only keep reads with at least one methylated CpG site
 
     Returns
     -------
@@ -30,6 +42,11 @@ def _get_meth_sam(coordinates: list, samfile: str) -> OneSampleMethylationData:
             meth_level = _calculate_meth_level(meth_pattern)
             if not meth_level:
                 continue
+            # Filter: if retain_methylated is True, skip reads with no methylated CpGs
+            if retain_methylated:
+                methylated_count = meth_pattern.count(MethFlags.methylated_motif_flag)
+                if methylated_count == 0:
+                    continue
             all_meth_patterns.append(meth_pattern)
             all_meth_levels.append(meth_level)
             total_read_number += 1

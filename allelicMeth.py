@@ -64,6 +64,12 @@ def main():
         type=int,
         required=False,
     )
+    parser.add_argument(
+        "--retain-methylated",
+        help="If set, retain only reads with at least one methylated CpG site and remove completely unmethylated reads (default: False).",
+        action="store_true",
+        required=False,
+    )
     args = parser.parse_args()
 
     workdir = os.getcwd()
@@ -115,7 +121,7 @@ def main():
     ####################################################################################
     coordinates = get_coordinates(fastafile[0])
     meth_data = MethylationData()
-    extract_meth(coordinates, samfiles, meth_data)
+    extract_meth(coordinates, samfiles, meth_data, retain_methylated=args.retain_methylated)
     make_histogram(meth_data, histmode)
     make_heatmap(meth_data, SimpleHeatmapMaker(), reads2plot)
     save_data(meth_data, WriteMethlation2CSV())
