@@ -79,3 +79,19 @@ Analyze single-end or merged pair-end BSAS reads.
 ```bash
 python3.10 allelicMeth.py --fasta reference.fasta --sam sample.sam --reads2plot 10000
 ```
+
+## Methylated Reads Only Analysis
+
+Filter out completely unmethylated reads and retain only reads with at least one methylated CpG site.
+
+```bash
+python3.10 allelicMeth.py --fasta reference.fasta --sam sample.sam --retain-methylated
+```
+
+## Methylated Reads with Multiple Samples
+
+Combine multiple datasets retaining only methylated reads.
+
+```bash
+python3.10 allelicMeth.py --fasta reference.fasta --sam rep1.sam rep2.sam rep3.sam --retain-methylated --mode multiple
+```

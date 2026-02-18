@@ -29,6 +29,7 @@ Can be executed without arguments from working directory containing FASTA and SA
 | `--sam` | string(s) | No | SAM file(s) with bisulfite reads. Multiple files accepted. If not provided, analyzes all `.sam` files in CWD. |
 | `--mode` | string | No | `single` or `multiple`. Single (default): one histogram per SAM file. Multiple: all datasets on one histogram. |
 | `--reads2plot` | integer | No | Number of reads to visualize on heatmap. Default: 10000. If greater than total reads, uses last available. |
+| `--retain-methylated` | flag | No | Filter out completely unmethylated reads. Only retains reads with at least one methylated CpG site. Default: False. |
 | `--help` | flag | No | Display help message. |
 
 ### Examples
@@ -63,6 +64,21 @@ python3.10 allelicMeth.py --fasta reference.fasta --sam sample.sam --reads2plot 
 python3.10 allelicMeth.py --fasta reference.fasta --sam rep1.sam rep2.sam rep3.sam --mode multiple --reads2plot 1000
 ```
 
+#### Retain methylated reads only
+```bash
+python3.10 allelicMeth.py --fasta reference.fasta --sam sample.sam --retain-methylated
+```
+
+#### Methylated reads with multiple mode
+```bash
+python3.10 allelicMeth.py --fasta reference.fasta --sam rep1.sam rep2.sam --retain-methylated --mode multiple
+```
+
+#### Methylated reads with custom visualization
+```bash
+python3.10 allelicMeth.py --fasta reference.fasta --sam sample.sam --retain-methylated --reads2plot 500
+```
+
 ## Orchestrator Script: run_allelicMeth.py
 
 Wrapper for batch processing with two operation modes.
@@ -84,6 +100,7 @@ python3.10 run_allelicMeth.py --mode {explicit,directory} [options]
 | `--log` | string | No | Both | Custom log file path. Default: auto-generated timestamp. |
 | `--allelicmeth-mode` | string | No | Both | Pass through to allelicMeth.py: `single` or `multiple` |
 | `--reads2plot` | integer | No | Both | Pass through to allelicMeth.py: reads to visualize |
+| `--retain-methylated` | flag | No | Both | Pass through to allelicMeth.py: retain only methylated reads |
 | `--debug` | flag | No | Both | Enable debug-level logging (verbose output) |
 | `--help` | flag | No | Both | Display help message |
 
@@ -126,6 +143,23 @@ python3.10 run_allelicMeth.py --mode explicit \
   --debug
 ```
 
+#### Explicit mode with methylated reads only
+```bash
+python3.10 run_allelicMeth.py --mode explicit \
+  --fasta reference.fasta \
+  --sam rep1.sam rep2.sam \
+  --retain-methylated
+```
+
+#### Explicit mode with methylated reads and multiple mode
+```bash
+python3.10 run_allelicMeth.py --mode explicit \
+  --fasta reference.fasta \
+  --sam rep1.sam rep2.sam \
+  --allelicmeth-mode multiple \
+  --retain-methylated
+```
+
 ### Directory Mode
 
 Batch process directory with automatic file discovery and region-based matching.
@@ -151,6 +185,21 @@ python3.10 run_allelicMeth.py --mode directory \
 #### Debug mode for directory processing
 ```bash
 python3.10 run_allelicMeth.py --mode directory --dir ./data/ --debug
+```
+
+#### Directory mode with methylated reads only
+```bash
+python3.10 run_allelicMeth.py --mode directory \
+  --dir ./data/ \
+  --retain-methylated
+```
+
+#### Directory mode with methylated reads and multiple mode
+```bash
+python3.10 run_allelicMeth.py --mode directory \
+  --dir ./data/ \
+  --allelicmeth-mode multiple \
+  --retain-methylated
 ```
 
 ## File Naming Convention (Directory Mode)
