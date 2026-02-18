@@ -8,25 +8,25 @@ from utils.meth_data import MethylationData, OneSampleMethylationData
 
 
 class HeatmapMaker(Protocol):
-    def plot(self, methdata: MethylationData, reads2plot: int) -> None:
+    def plot(self, methdata: MethylationData, reads2plot: int, output_suffix: str = "") -> None:
         ...
 
 
 class SimpleHeatmapMaker:
     """Makes individual heatmaps from data sets stored in MethylationData class instance.
     """
-    def plot(self, methdata: MethylationData, reads2plot: int) -> None:
+    def plot(self, methdata: MethylationData, reads2plot: int, output_suffix: str = "") -> None:
         for data in methdata.data:
             if not data.meth_patterns:
                 continue
             sorted_reads = _get_random_reads_for_heatmap(data, reads2plot)
             xaxisRange = len(data.meth_patterns[0])
             _generate_heatmap(sorted_reads, xaxisRange)
-            plt.savefig(data.file_name.strip(".sam") + "_heatmap.png",dpi=200)
+            plt.savefig(data.file_name.strip(".sam") + output_suffix + "_heatmap.png",dpi=200)
 
 
-def make_heatmap(methdata: MethylationData, heatmap_maker: HeatmapMaker, reads2plot: int) -> None:
-    heatmap_maker.plot(methdata, reads2plot)
+def make_heatmap(methdata: MethylationData, heatmap_maker: HeatmapMaker, reads2plot: int, output_suffix: str = "") -> None:
+    heatmap_maker.plot(methdata, reads2plot, output_suffix)
 
 def _get_random_reads_for_heatmap(methdata: OneSampleMethylationData, reads2plot: int):
     """Generates a list of random methylation patterns for plotting."""

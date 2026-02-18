@@ -13,9 +13,12 @@ class DataWriter(Protocol):
 class WriteMethlation2CSV:
     """Saves class MethylationData to csv file.
     """
+    def __init__(self, output_suffix: str = ""):
+        self.output_suffix = output_suffix
+
     def save(self, data: MethylationData) -> None:
         for d in data.data:
-            save_name = d.file_name.strip(".sam") + ".csv"
+            save_name = d.file_name.strip(".sam") + self.output_suffix + ".csv"
             with open(save_name, "w") as fh:
                 fh.write("\n".join([str(i) for i in d.meth_levels]))
 

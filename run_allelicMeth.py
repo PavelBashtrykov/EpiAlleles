@@ -75,7 +75,7 @@ class AllelicMethOrchestrator:
         self.logger.debug(f"allelicMeth.py found at {self.allelicmeth_script}")
         return True
 
-    def _run_allelicmeth(self, fasta_file, sam_files, mode=None, reads2plot=None, retain_methylated=False):
+    def _run_allelicmeth(self, fasta_file, sam_files, mode=None, reads2plot=None, retain_methylated=False, output_suffix=None):
         """
         Execute allelicMeth.py with given parameters.
 
@@ -85,6 +85,7 @@ class AllelicMethOrchestrator:
             mode: Optional mode (single/multiple)
             reads2plot: Optional number of reads to plot
             retain_methylated: Optional flag to retain only methylated reads
+            output_suffix: Optional suffix for output filenames
 
         Returns:
             Tuple (success: bool, stdout: str, stderr: str)
@@ -102,6 +103,8 @@ class AllelicMethOrchestrator:
             cmd.extend(["--reads2plot", str(reads2plot)])
         if retain_methylated:
             cmd.append("--retain-methylated")
+        if output_suffix:
+            cmd.extend(["--output-suffix", output_suffix])
 
         self.logger.debug(f"Executing: {' '.join(cmd)}")
 
@@ -127,7 +130,7 @@ class AllelicMethOrchestrator:
             self.logger.error(f"Error executing allelicMeth.py: {e}")
             return False, "", str(e)
 
-    def run_explicit_mode(self, fasta_file, sam_files, mode=None, reads2plot=None, retain_methylated=False):
+    def run_explicit_mode(self, fasta_file, sam_files, mode=None, reads2plot=None, retain_methylated=False, output_suffix=None):
         """
         Run in explicit mode with provided files.
 
@@ -137,6 +140,7 @@ class AllelicMethOrchestrator:
             mode: Optional mode (single/multiple)
             reads2plot: Optional number of reads to plot
             retain_methylated: Optional flag to retain only methylated reads
+            output_suffix: Optional suffix for output filenames
 
         Returns:
             bool: Success status
@@ -164,7 +168,7 @@ class AllelicMethOrchestrator:
 
         # Run analysis
         success, stdout, stderr = self._run_allelicmeth(
-            fasta_path, sam_paths, mode, reads2plot, retain_methylated
+            fasta_path, sam_paths, mode, reads2plot, retain_methylated, output_suffix
         )
 
         if success:
@@ -218,7 +222,7 @@ class AllelicMethOrchestrator:
                 matching_files.append(Path(directory) / filename)
         return sorted(matching_files)
 
-    def run_directory_mode(self, directory, mode=None, reads2plot=None, retain_methylated=False):
+    def run_directory_mode(self, directory, mode=None, reads2plot=None, retain_methylated=False, output_suffix=None):
         """
         Run in directory mode - scan for matching FASTA/SAM pairs.
 
@@ -227,6 +231,7 @@ class AllelicMethOrchestrator:
             mode: Optional mode (single/multiple)
             reads2plot: Optional number of reads to plot
             retain_methylated: Optional flag to retain only methylated reads
+            output_suffix: Optional suffix for output filenames
 
         Returns:
             bool: Success status (True if all pairs processed successfully)
@@ -300,7 +305,7 @@ class AllelicMethOrchestrator:
 
             try:
                 success, stdout, stderr = self._run_allelicmeth(
-                    fasta_file, sam_files, mode, reads2plot, retain_methylated
+                    fasta_file, sam_files, mode, reads2plot, retain_methylated, output_suffix
                 )
 
                 if success:
@@ -412,6 +417,12 @@ Examples:
         help="Enable debug logging"
     )
 
+    parser.add_argument(
+        "--output-suffix",
+        type=str,
+        help="Suffix to append to output filenames before extension (e.g., '_retained', '_20240218'). Useful for distinguishing different analysis runs."
+    )
+
     args = parser.parse_args()
 
     # Determine log level
@@ -435,7 +446,8 @@ Examples:
                 args.sam,
                 mode=args.allelicmeth_mode,
                 reads2plot=args.reads2plot,
-                retain_methylated=args.retain_methylated
+                retain_methylated=args.retain_methylated,
+                output_suffix=args.output_suffix
             )
 
         else:  # directory mode
@@ -448,7 +460,8 @@ Examples:
                 args.dir,
                 mode=args.allelicmeth_mode,
                 reads2plot=args.reads2plot,
-                retain_methylated=args.retain_methylated
+                retain_methylated=args.retain_methylated,
+                output_suffix=args.output_suffix
             )
 
         return 0 if success else 1

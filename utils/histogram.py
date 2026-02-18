@@ -9,33 +9,33 @@ from utils.meth_data import MethylationData, OneSampleMethylationData
 
 class HistogramMaker(Protocol):
     """Interface for any histogarm maker"""
-    def plot(self, methdata: MethylationData) -> None:
+    def plot(self, methdata: MethylationData, output_suffix: str = "") -> None:
         ...
 
 
 class SingleDataHistogramMaker:
     """Makes individual histograms from data stored in MethylationData class instance.
     """
-    def plot(self, methdata: MethylationData) -> None:
+    def plot(self, methdata: MethylationData, output_suffix: str = "") -> None:
         for data in  methdata.data:
             formated_data = _format_data_2_df(data)
             _generate_histogram(formated_data)
-            plt.savefig(data.file_name.strip(".sam") + "_histogram.png")
+            plt.savefig(data.file_name.strip(".sam") + output_suffix + "_histogram.png")
 
 
 class MultipleDataHistogramMaker:
-    def plot(self, methdata: MethylationData) -> None:
+    def plot(self, methdata: MethylationData, output_suffix: str = "") -> None:
         main_df = pd.DataFrame(columns=["meth_pattern", "meth_level", "sample"])
         for data in  methdata.data:
             formated_data = _format_data_2_df(data)
             main_df = pd.concat([main_df, formated_data], axis=0, ignore_index=True)
         _generate_histogram_multiple_data(main_df)
-        plt.savefig("overlay_histogram.png")
+        plt.savefig("overlay_histogram" + output_suffix + ".png")
 
 
-def make_histogram(methdata: MethylationData, hist_maker: HistogramMaker) -> None:
+def make_histogram(methdata: MethylationData, hist_maker: HistogramMaker, output_suffix: str = "") -> None:
     """Make a histogram"""
-    hist_maker.plot(methdata)
+    hist_maker.plot(methdata, output_suffix)
 
 def _format_data_2_df(methdata: OneSampleMethylationData) -> pd.DataFrame:
     df = pd.DataFrame()

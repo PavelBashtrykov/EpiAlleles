@@ -70,6 +70,13 @@ def main():
         action="store_true",
         required=False,
     )
+    parser.add_argument(
+        "--output-suffix",
+        help="Suffix to append to output filenames before extension (e.g., '_retained', '_20240218'). Useful for distinguishing different analysis runs.",
+        type=str,
+        required=False,
+        default="",
+    )
     args = parser.parse_args()
 
     workdir = os.getcwd()
@@ -122,9 +129,9 @@ def main():
     coordinates = get_coordinates(fastafile[0])
     meth_data = MethylationData()
     extract_meth(coordinates, samfiles, meth_data, retain_methylated=args.retain_methylated)
-    make_histogram(meth_data, histmode)
-    make_heatmap(meth_data, SimpleHeatmapMaker(), reads2plot)
-    save_data(meth_data, WriteMethlation2CSV())
+    make_histogram(meth_data, histmode, args.output_suffix)
+    make_heatmap(meth_data, SimpleHeatmapMaker(), reads2plot, args.output_suffix)
+    save_data(meth_data, WriteMethlation2CSV(args.output_suffix))
 
 
 if __name__ == "__main__":
