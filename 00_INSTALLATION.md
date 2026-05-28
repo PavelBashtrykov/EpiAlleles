@@ -35,7 +35,7 @@ pip install -r requirements.txt
 ### Option 2: venv + pip
 ```bash
 python3.10 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
